@@ -15,10 +15,14 @@
   "contributors": [
     "Spencer Snyder <spencer@spencersnyder.io> (https://spencersnyder.io)"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "captain-hook": "^0.0.3",
+    "lodash": "^4.17.15"
+  },
   "devDependencies": {
     "@commitlint/cli": "latest",
     "@commitlint/config-conventional": "latest",
+    "@ladjs/mongoose": "^2.1.1",
     "ava": "latest",
     "codecov": "latest",
     "cross-env": "latest",
@@ -27,6 +31,7 @@
     "fixpack": "latest",
     "husky": "latest",
     "lint-staged": "latest",
+    "mongoose": "^5.9.16",
     "nyc": "latest",
     "remark-cli": "latest",
     "remark-preset-github": "latest",

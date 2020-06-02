@@ -10,14 +10,13 @@
 
 > monitor and respond to changes in your documents!
 
-
 ## Table of Contents
 
-* [Install](#install)
-* [Usage](#usage)
-* [Contributors](#contributors)
-* [License](#license)
-
+- [Install](#install)
+- [Basic Example Usage](#basic-example-usage)
+- [Special Credit](#special-credit)
+- [Contributors](#contributors)
+- [License](#license)
 
 ## Install
 
@@ -33,18 +32,44 @@ npm install mongoose-monitor-fields-plugin
 yarn add mongoose-monitor-fields-plugin
 ```
 
-
-## Usage
+## Basic Example Usage
 
 ```js
-const MongooseMonitorFieldsPlugin = require('mongoose-monitor-fields-plugin');
+const { Schema } = require('mongoose');
+const monitorFields = require('mongoose-monitor-fields-plugin');
 
-const mongooseMonitorFieldsPlugin = new MongooseMonitorFieldsPlugin();
+const mySchema = new Schema({
+  my_field: {
+    type: String,
+    // set monitor true to have the change passed to the document level callback post save
+    // or define a function for a field level callback post save
+    monitor: console.log
+  }
+});
 
-console.log(mongooseMonitorFieldsPlugin.renderName());
-// script
+mySchema.plugin(monitorFields, console.log);
+
+const MyModel = model('MySchema', mySchema);
+
+(async () => {
+  let myDocument = new MyModel({
+    my_field: 'foo'
+  });
+  await myDocument.save();
+  myDocument.my_field = 'bar';
+  await myDocument.save();
+
+  // prints the following to the console
+  // for the field level callback
+  // {path: 'my_field', prev: 'foo', updated: 'bar'}
+  // for the document level
+  // [{path: 'my_field', prev: 'foo', updated: 'bar'}]
+})();
 ```
 
+## Special Credit
+
+This package was heavily influenced by [mongoose-plugin-diff](https://github.com/CentralPing/mongoose-plugin-diff)
 
 ## Contributors
 
@@ -52,14 +77,11 @@ console.log(mongooseMonitorFieldsPlugin.renderName());
 | ------------------ | -------------------------- |
 | **Spencer Snyder** | <https://spencersnyder.io> |
 
-
 ## License
 
 [MIT](LICENSE) © [Spencer Snyder](https://spencersnyder.io)
 
-
-## 
+##
 
 [npm]: https://www.npmjs.com/
-
 [yarn]: https://yarnpkg.com/
