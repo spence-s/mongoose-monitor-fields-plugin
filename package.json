@@ -1,7 +1,7 @@
 {
   "name": "mongoose-monitor-fields-plugin",
   "description": "monitor and respond to changes in your documents!",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Spencer Snyder <spencer@spencersnyder.io> (https://spencersnyder.io)",
   "bugs": {
     "url": "https://github.com/Spence-s/mongoose-monitor-fields-plugin/issues",
