@@ -47,10 +47,8 @@ module.exports = function(schema, globalCallback) {
     for (const path of __last_modified_paths) {
       const test = path.replace(/\.\d+\./g, '.$.');
       if (fieldSet.has(test)) {
-        const pathArr = path.split('.');
-
-        const og = _.get(original, pathArr);
-        const ud = _.get(updated, pathArr);
+        const og = _.get(original, path);
+        const ud = _.get(updated, path);
 
         if (!_.isEqual(og, ud)) {
           changes.push({
