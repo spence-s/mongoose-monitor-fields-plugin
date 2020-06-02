@@ -27,7 +27,7 @@ module.exports = function(schema, globalCallback) {
     });
 
   schema.post('init', doc => {
-    doc.__previous = _.cloneDeep(doc.toObject({ depopulate: true }));
+    doc.__previous = doc.toObject({ depopulate: true });
   });
 
   schema.preUpdate((doc, next) => {
@@ -35,7 +35,7 @@ module.exports = function(schema, globalCallback) {
     next();
   });
 
-  schema.postUpdate(doc => {
+  schema.postUpdate(function(doc) {
     const { __previous, __last_modified_paths, ...updated } = doc.toObject({
       virtuals: true,
       depopulate: true
@@ -60,7 +60,7 @@ module.exports = function(schema, globalCallback) {
           });
 
           if (_.isFunction(callbacks[path]))
-            callbacks[path]({
+            callbacks[path].call(doc, {
               path,
               prev: og,
               update: ud
@@ -69,7 +69,7 @@ module.exports = function(schema, globalCallback) {
       }
     }
 
-    if (_.isFunction(globalCallback)) globalCallback(changes);
+    if (_.isFunction(globalCallback)) globalCallback.call(doc, changes);
   });
 
   function getFields(schema) {

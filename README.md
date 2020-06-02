@@ -67,6 +67,8 @@ const MyModel = model('MySchema', mySchema);
 })();
 ```
 
+In either field level or document level callbacks - `this` refers to the newly updated document.
+
 ## Special Credit
 
 This package was heavily influenced by [mongoose-plugin-diff](https://github.com/CentralPing/mongoose-plugin-diff)
